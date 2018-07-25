@@ -1,0 +1,25 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: read-write-deployment
+spec:
+  template:
+    metadata:
+      labels:
+        app: read-write-deployment
+    spec:
+      volumes:
+      - name : my-storage
+        persistentVolumeClaim: 
+          claimName: task-pv-claim
+      containers:
+      - name: read-container
+        image: sirjansingh310/reader 
+        volumeMounts:
+        - mountPath: "/app/database"
+          name: my-storage
+      - name: write-container
+        image: sirjansingh310/writer 
+        volumeMounts:
+        - mountPath: "/app/database"
+          name: my-storage

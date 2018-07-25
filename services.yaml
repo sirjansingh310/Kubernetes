@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: read-write-service
+spec:
+  ports:
+    - name: write
+      port: 5555
+      targetPort: 5555
+    - name: read
+      port: 7777
+      targetPort: 7777
+  selector:
+    app: read-write-deployment
+  type: LoadBalancer
